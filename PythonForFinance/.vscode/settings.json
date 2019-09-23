@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": ".venv/bin/python",
+    "git.ignoreLimitWarning": true,
+    "code-runner.executorMap": {
+        "python":"$pythonPath $fullFileName",
+    }
+}
