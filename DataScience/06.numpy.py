@@ -29,3 +29,34 @@ print("row : {}".format(b.shape[0]))
 print("coumn : {}".format(b.shape[1]))
 
 c = b.copy()
+
+
+a  = np.array([[1,2,3],[4,5,6],[7,8,9]])
+print(a)
+
+# row를 1차원 배열로 반환
+print("a[0] \n {}".format(a[0]))
+
+# row를 2차원 배열로 반환
+print("a[[0]] \n {}".format(a[[0]]))
+
+# np.array[row, column]
+print("a[0,2] \n {}".format(a[0,2]))
+
+# np.array[[row, row]]
+print("a[[0,2]] \n {}".format(a[[0,2]]) )
+
+# np.array[:,[0,2]] 이면 0, 2번째 행의 모든 열을 출력
+print("a[:, [0,2]] \n {}".format(a[:,  [0,2]]))
+
+# 열과 행에 모두 리스트를 적용하는 것은 제대로 되지 않는다. 이 경우는 열의 조건과 행의 조건을 만족하는 [1 9]가 출력
+print("a[[0,2], [0,2]] \n {}".format(a[[0,2],  [0,2]]))
+
+# 열과 행에 모두 리스트를 적용하려면 np.ix_를 사용해야 한다.
+print("a[np.ix_([0,2],[0,2])] \n {}".format(a[np.ix_([0,2],[0,2])]))
+
+# 논리 검색시 and, or를 사용할 수 없다. &, |를 사용해야 한다.
+print("a[a>5] \n {}".format(a[a>5]))
+
+
+print("a[(a>5) & (a<8)] \n {}".format(a[(a>5) & (a<8) ]))
