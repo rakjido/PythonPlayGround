@@ -61,16 +61,61 @@ import numpy as np
 
 # print("a[(a>5) & (a<8)] \n {}".format(a[(a>5) & (a<8) ]))
 
-# array간의 결합
-A = np.arange(1,10).reshape(3,3)
-print(A)
+# # array간의 결합
+# A = np.arange(1,10).reshape(3,3)
+# print(A)
 
-B = np.arange(11,14).reshape(1,3)
-print(B)
+# B = np.arange(11,14).reshape(1,3)
+# print(B)
 
-# vertical 결합 : axis=0
-print(np.append(A,B, axis=0))
+# # vertical 결합 : axis=0
+# print(np.append(A,B, axis=0))
 
-# horizontal 결합 : axis=1
-print(np.append(A,B.T, axis=1))
+# # horizontal 결합 : axis=1
+# print(np.append(A,B.T, axis=1))
 
+y = np.linspace(1,10,10)
+print(y)
+
+
+print(y+y)
+print(y.__add__(y))
+print(np.add(y,y))
+
+# sum
+print(y.sum())
+
+# cumulative sum
+print(y.cumsum())
+
+# 다차원배열일 경우
+a = np.arange(1,11).reshape(2,5)
+print(a)
+# axis=0 : column별 sum
+print(np.sum(a, axis=0))
+# axis=1 : row별 sum
+print(np.sum(a, axis=1))
+
+# axis=0 : column별 max
+print(np.max(a, axis=0))
+# axis=1 : row별 max
+print(np.max(a, axis=1))
+
+
+# product (factorial)
+print(y.prod())
+
+# cumulative product
+print(y.cumprod())
+
+# power
+print(np.power(y, 2))
+
+# exponential
+print(np.exp(y))
+
+# log (natural)
+print(np.log(y))
+
+# log 10
+print(np.log10(y))
