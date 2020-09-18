@@ -138,30 +138,91 @@ import numpy as np
 # # how = 'right' : right join 
 # print(pd.merge(df1, df2, how='right'))
 
-url = 'http://www.fdic.gov/bank/individual/failed/banklist.html'
-# read HTML tables into a list of Dataframe objects
-dfs = pd.read_html(url)
-print(type(dfs))
-# list[0]은 dataframe임 
-dfs = dfs[0]
-print(type(dfs))
-print(dfs.head())
-print(dfs.info())
-# covnert to datetime
-dfs['Closing Date'] = pd.to_datetime(dfs['Closing Date'])
-print(dfs.head())
-print(dfs.dtypes)
-dfs['year'] = dfs['Closing Date'].dt.strftime('%Y')
-print(dfs.head())
-# 년도별 합계
-print(dfs['year'].value_counts())
-
-dfs.to_csv("failed_bank_list.csv")
-dfs2 = pd.read_csv("failed_bank_list.csv", parse_dates=['Closing Date'])
-print(dfs2.dtypes)
-
-# url = 'https://dhlottery.co.kr/gameResult.do?method=byWin'
+# url = 'http://www.fdic.gov/bank/individual/failed/banklist.html'
+# # read HTML tables into a list of Dataframe objects
 # dfs = pd.read_html(url)
-# print(dfs)
-# print(dfs[0])
 # print(type(dfs))
+# # list[0]은 dataframe임 
+# dfs = dfs[0]
+# print(type(dfs))
+# print(dfs.head())
+# print(dfs.info())
+# # covnert to datetime
+# dfs['Closing Date'] = pd.to_datetime(dfs['Closing Date'])
+# print(dfs.head())
+# print(dfs.dtypes)
+# dfs['year'] = dfs['Closing Date'].dt.strftime('%Y')
+# print(dfs.head())
+# # 년도별 합계
+# print(dfs['year'].value_counts())
+
+# dfs.to_csv("failed_bank_list.csv")
+# dfs2 = pd.read_csv("failed_bank_list.csv", parse_dates=['Closing Date'])
+# print(dfs2.dtypes)
+
+# # url = 'https://dhlottery.co.kr/gameResult.do?method=byWin'
+# # dfs = pd.read_html(url)
+# # print(dfs)
+# # print(dfs[0])
+# # print(type(dfs))
+
+
+#  https://www.kaggle.com/lava18/google-play-store-apps
+googlestore = pd.read_csv('googleplaystore.csv')
+
+print(googlestore.shape)
+print(googlestore.head())
+
+# isna : 결측값이 있으면 true
+print(googlestore.isna().sum())
+
+# fillna(특정값) : 결측치를 특정값으로 채운다.
+googlestore = googlestore.fillna(0)
+print(googlestore.isna().sum())
+print(googlestore.dtypes)
+
+print(googlestore.head()['Last Updated'])
+try :
+    googlestore['Last Updated'] = pd.to_datetime(googlestore['Last Updated'], errors='coerce')
+except Exception as e :
+    print(e)
+
+print(googlestore.isna().sum())
+# 결측치가 있는 row
+print(googlestore.loc[googlestore['Last Updated'].isna(),:])
+
+# clipboard를 통해 excel로 복사해서 보는 방법이 현재는 best
+googlestore.to_clipboard()
+
+# 아래와 같이 이어서 쓰면 앞의 replace만 적용됨
+# print(googlestore['Installs'].str.replace(",","").replace("+",""))
+googlestore['Installs'] = googlestore['Installs'].str.replace(",","")
+googlestore['Installs'] = googlestore['Installs'].str.replace("+","")
+print(googlestore['Installs'].head(10))
+
+# https://data36.com/pandas-tutorial-2-aggregation-and-grouping/
+print(googlestore.groupby('Installs').count())
+googlestore['Installs'] = googlestore['Installs'].str.replace("Free","0")
+print(googlestore.dtypes)
+
+# 자료형 변경
+googlestore['Installs'] = googlestore['Installs'].astype(int)
+print(googlestore.dtypes)
+
+
+# select 'Installs', 'App', 'Reviews' from googlestore
+print(googlestore[['Installs', 'App', 'Reviews']])
+# select distinct 'Category' from googlestore
+print(googlestore[['Category', 'Genres']].drop_duplicates())
+
+# select * from googlestore where Category ='FAMILY' and Rating < 4 
+# # dataframe.where() 는 결과가 이상하게 나온다.
+filter1 = googlestore['Category']=='FAMILY'
+filter2 = googlestore['Rating'] < 4
+googlestore.loc[filter1 & filter2, :].to_clipboard()
+
+
+# group by
+# order by
+# join
+
