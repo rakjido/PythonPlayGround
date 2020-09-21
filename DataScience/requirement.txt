@@ -5,3 +5,5 @@ pyecharts==1.8.1
 seaborn==0.10.1
 sklearn
 lxml
+markdown2
+qrcode

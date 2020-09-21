@@ -234,7 +234,7 @@ rating_mean  = googlestore[['Category', 'Rating']].groupby(['Category']).mean()
 # Category가 dataframe값이 아닌 index임
 print(rating_mean.index)
 print(rating_mean.columns)
-# order by
+# select * from rating_mean sort by Category
 print(rating_mean.sort_values(by='Category', ascending=True))
 
 # join
