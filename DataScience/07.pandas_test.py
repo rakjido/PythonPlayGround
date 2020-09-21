@@ -210,9 +210,9 @@ googlestore['Installs'] = googlestore['Installs'].astype(int)
 print(googlestore.dtypes)
 
 
-# select 'Installs', 'App', 'Reviews' from googlestore
+# select Installs, App, Reviews from googlestore
 print(googlestore[['Installs', 'App', 'Reviews']])
-# select distinct 'Category' from googlestore
+# select distinct Category, Genres from googlestore
 print(googlestore[['Category', 'Genres']].drop_duplicates())
 
 # select * from googlestore where Category ='FAMILY' and Rating < 4 
@@ -221,8 +221,21 @@ filter1 = googlestore['Category']=='FAMILY'
 filter2 = googlestore['Rating'] < 4
 googlestore.loc[filter1 & filter2, :].to_clipboard()
 
-
 # group by
+# 이상치 제거
+googlestore = googlestore.loc[googlestore['Reviews']!='3.0M', :]
+# select sum(Rating) from googlestore group by Category
+print(googlestore[['Category', 'Rating']].groupby(['Category']).sum())
+# select avg(Rating) from googlestore group by Category
+print(googlestore[['Category', 'Rating']].groupby(['Category']).mean())
+
+
+rating_mean  = googlestore[['Category', 'Rating']].groupby(['Category']).mean()
+# Category가 dataframe값이 아닌 index임
+print(rating_mean.index)
+print(rating_mean.columns)
 # order by
+print(rating_mean.sort_values(by='Category', ascending=True))
+
 # join
 
